@@ -10,6 +10,7 @@ weatherForm.addEventListener('submit', (e) => {
     const location = search.value
 
     messageOne.textContent = 'Loading...'
+    weatherIcon.setAttribute('src', '')
     messageTwo.textContent = ''
 
     fetch('/weather?address=' + encodeURIComponent(location)).then((response) => {
