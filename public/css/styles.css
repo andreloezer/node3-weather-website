@@ -53,3 +53,16 @@ button {
     color: white;
     padding: 8px;
 }
+
+#forecast-report {
+    display: flex;
+    align-items: center;
+}
+
+#forecast-report img {
+    height: fit-content;
+}
+
+#forecast-report p {
+    margin-left: 20px;
+}

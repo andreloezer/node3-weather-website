@@ -11,10 +11,11 @@ const forecast = (latitude, longitude, callback) => {
         } else if (!body.location.name) {
             callback('Forecasts for this region are unavailable. Please try another location', undefined)
         } else {
-            const {weather_descriptions:description, temperature, feelslike, precip} = body.current
+            const {weather_descriptions:description, temperature, feelslike, precip, humidity, weather_icons} = body.current
             const {name, region, country} = body.location
-            const report = description[0] + '. It is currently ' + temperature + ' degrees Celsius out in ' + name + ', ' + region + ', ' + country + '. It feels like ' + feelslike + ' degrees Celsius out. There is a ' + precip + '% chance of rain.'
-            callback(undefined, report)
+            const report = description[0] + '. It is currently ' + temperature + ' degrees Celsius out in ' + name + ', ' + region + ', ' + country + '. It feels like ' + feelslike + ' degrees Celsius out. The relative humidity is ' + humidity + '% and there is a ' + precip + '% chance of rain.'
+            const icon = weather_icons[0]
+            callback(undefined, report, icon)
         }
     })
 }
