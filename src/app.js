@@ -42,26 +42,40 @@ app.get('/help', (req, res) => {
     })
 })
 
-// Weather API
-app.get('/weather', (req, res) => {
-    if (!req.query.address) {
+// Weather API - Current location
+app.get('/location', (req,res) => {
+    if(!req.query.latitude & req.query.longitude) {
         return res.send({
-            error: 'You must provide an address'
+            error: 'Could not find your location'
         })
     }
-    geocode(req.query.address, (error, {latitude, longitude, location} = {}) => {
+
+    forecast(req.query.latitude, req.query.longitude, (error, report, icon, location) => {
         if (error) {
             return res.send({error})
         }
-        forecast(latitude, longitude, (error, report, icon) => {
+        return res.send({
+            report,
+            icon,
+            location
+        })
+    })
+})
+
+// Weather API - Search input
+app.get('/weather', (req, res) => {
+    geocode(req.query.address, (error, {latitude, longitude} = {}) => {
+        if (error) {
+            return res.send({error})
+        }
+        forecast(latitude, longitude, (error, report, icon, location) => {
             if (error) {
                 return res.send({error})
             }
             return res.send({
                 report,
                 icon,
-                location,
-                address: req.query.address
+                location
             })
         })
     })
